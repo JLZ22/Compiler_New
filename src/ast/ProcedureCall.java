@@ -1,0 +1,36 @@
+package ast; 
+import environment.*; 
+import java.util.List;
+
+/**
+ * This class represents a procedure call.
+ */
+public class ProcedureCall extends Expression{
+    private String name; 
+    private List<Expression> arguments; 
+
+    public ProcedureCall(String name, List<Expression> arguments){
+        this.name = name; 
+        this.arguments = arguments;
+    }
+
+    /**
+     * Evaluates the statements associated with the 
+     * given procedure name. 
+     * 
+     * @param env The environment which stores the procedure name and 
+     *            the statement associated with it. 
+     */
+    public int eval(Environment env) throws Exception{
+        ProcedureDeclaration procedure = env.getProcedure(name);
+        List<String> params = procedure.getParams(); 
+        Environment subEnv = new Environment(env); 
+        String name = procedure.getName(); 
+        if(arguments != null)  
+            for(int i = 0 ; i < arguments.size() ; i++)
+                subEnv.declareVariable(params.get(i), arguments.get(i).eval(env));
+        subEnv.declareVariable(name, 0); 
+        procedure.getStatement().exec(subEnv); 
+        return subEnv.getVariable(name); 
+    }
+}
