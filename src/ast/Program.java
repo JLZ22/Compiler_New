@@ -8,11 +8,14 @@ import java.util.List;
  * program. 
  */
 public class Program {
+    private List<Statement> varDeclarations; 
     private List<ProcedureDeclaration> procedures; 
     private List<Statement> stmts; 
 
-    public Program(List<ProcedureDeclaration> procedures, List<Statement> stmts){
+    public Program(List<ProcedureDeclaration> procedures, List<Statement> varDeclarations, 
+                   List<Statement> stmts){
         this.procedures = procedures; 
+        this.varDeclarations = varDeclarations; 
         this.stmts = stmts; 
     }
 
@@ -25,6 +28,9 @@ public class Program {
     public void compile(String fileName){
         Emitter e = new Emitter(fileName); 
         e.emit(".data"); 
+        for(int i = 0 ; i < varDeclarations.size() ; i++){
+            varDeclarations.get(i).compile(e); 
+        }
         e.emit("newLine: .asciiz \"\\n\""); 
         e.emit(".text"); 
         e.emit(".globl main"); 
