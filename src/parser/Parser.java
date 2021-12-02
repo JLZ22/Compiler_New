@@ -55,6 +55,22 @@ public class Parser {
     }
 
     /**
+     * Parses through the variable declaration and 
+     * returns a list of variabble assignments. 
+     * 
+     * @return A list of variable assignments. 
+     * @throws Exception
+     */
+    public List<Statement> parseVarDeclarations() throws Exception {
+         List<Statement> varDeclarations = new ArrayList<Statement>(); 
+         eat("VAR"); 
+         while(!currToken.equals(";")){
+            varDeclarations.add(new VarDeclaration(currToken));  
+         }
+         return varDeclarations; 
+    }
+
+    /**
      * Parses through a pascal program and returns an object
      * representation of all the statements. 
      * 
@@ -75,11 +91,12 @@ public class Parser {
             eat(";"); 
             procedures.add(new ProcedureDeclaration(name, parms, parseStatement()));
         }
+        List<Statement> varDeclarations = parseVarDeclarations();
         ArrayList<Statement> stmts = new ArrayList<Statement>(); 
         while(scanner.hasNext()){
             stmts.add(parseStatement()); 
         }
-        return new Program(procedures, stmts); 
+        return new Program(procedures, varDeclarations, stmts); 
     }
     
     /**
