@@ -1,5 +1,6 @@
 package ast; 
 import environment.*; 
+import codeGen.*; 
 /**
  * This class represents a conditional expression which 
  * compares two expressions with a relative operator. 
@@ -61,5 +62,44 @@ public class Condition extends Expression{
         if(bool == -1)
             throw new Exception("Invalid relative operator");
         return bool; 
+    }
+
+        /**
+     * Takes in an emitter and uses it to 
+     * write MIPS code representation of a 
+     * variable assignment into a file. 
+     * 
+     * @param e The emitter used to write code. 
+     * @param endLabel The label that will be jumped to after the 
+     *                 conditional. 
+     */
+    public void compile(Emitter e, String endLabel){
+        expr1.compile(e);
+        e.emit("move $t0, $v0"); 
+        expr2.compile(e); 
+        String instruction = ""; 
+        switch(relop){
+            case "<=": 
+                instruction = "ble";   
+                break; 
+            case ">=":
+                instruction = "bge";  
+                break; 
+            case "<": 
+                instruction = "blt"; 
+                break; 
+            case ">": 
+                instruction = "bgt"; 
+                break; 
+            case "=": 
+                instruction = "beq"; 
+                break; 
+            case "<>": 
+                instruction = "bne"; 
+                break; 
+            default: 
+                break; 
+        }
+        e.emit(instruction + " $t0, $v0, " + endLabel); 
     }
 }
