@@ -1,3 +1,7 @@
+	# This is auto-generated assembly code which represents
+	# a compiled version of simplified pascal. 
+	# @author John Zeng
+	# @date 2021-12-06
 	.data
 	varx: .word 0
 	vary: .word 0

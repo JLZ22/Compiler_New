@@ -1,6 +1,8 @@
 package ast; 
 import codeGen.*; 
-import environment.*; 
+import environment.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -27,6 +29,10 @@ public class Program {
      */
     public void compile(String fileName){
         Emitter e = new Emitter(fileName); 
+        e.emit("# This is auto-generated assembly code which represents"); 
+        e.emit("# a compiled version of simplified pascal. "); 
+        e.emit("# @author John Zeng"); 
+        e.emit("# @date " + LocalDate.now()); 
         e.emit(".data"); 
         if(varDeclarations != null){
             for(int i = 0 ; i < varDeclarations.size() ; i++){
