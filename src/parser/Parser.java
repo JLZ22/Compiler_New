@@ -97,7 +97,9 @@ public class Parser {
             eat(";"); 
             procedures.add(new ProcedureDeclaration(name, parms, parseStatement()));
         }
-        List<Statement> varDeclarations = parseVarDeclarations();
+        List<Statement> varDeclarations = new ArrayList<Statement>();
+        while(currToken.equals("VAR"))
+            varDeclarations.addAll(parseVarDeclarations()); 
         ArrayList<Statement> stmts = new ArrayList<Statement>(); 
         while(scanner.hasNext()){
             stmts.add(parseStatement()); 
