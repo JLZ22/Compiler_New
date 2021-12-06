@@ -66,7 +66,11 @@ public class Parser {
          eat("VAR"); 
          while(!currToken.equals(";")){
             varDeclarations.add(new VarDeclaration(currToken));  
+            eat(currToken); 
+            if(currToken.equals(","))
+                eat(currToken); 
          }
+         eat(";"); 
          return varDeclarations; 
     }
 

@@ -1,5 +1,8 @@
+VAR x,y;
+
 BEGIN 
-	WRITELN(-3+11);
-	WRITELN(16/2); 
-END;
-. 
+	x:=3;
+	y:=2*x;
+	WRITELN(x+y); 
+END; 
+.
