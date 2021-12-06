@@ -62,6 +62,8 @@ public class Parser {
      * @throws Exception
      */
     public List<Statement> parseVarDeclarations() throws Exception {
+        if(!currToken.equals("VAR"))
+            return null;  
          List<Statement> varDeclarations = new ArrayList<Statement>(); 
          eat("VAR"); 
          while(!currToken.equals(";")){

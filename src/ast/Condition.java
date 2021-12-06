@@ -64,10 +64,10 @@ public class Condition extends Expression{
         return bool; 
     }
 
-        /**
+    /**
      * Takes in an emitter and uses it to 
      * write MIPS code representation of a 
-     * variable assignment into a file. 
+     * conditional into a file. 
      * 
      * @param e The emitter used to write code. 
      * @param endLabel The label that will be jumped to after the 
@@ -80,22 +80,22 @@ public class Condition extends Expression{
         String instruction = ""; 
         switch(relop){
             case "<=": 
-                instruction = "ble";   
+                instruction = "bge";   
                 break; 
             case ">=":
-                instruction = "bge";  
+                instruction = "ble";  
                 break; 
             case "<": 
-                instruction = "blt"; 
-                break; 
-            case ">": 
                 instruction = "bgt"; 
                 break; 
+            case ">": 
+                instruction = "blt"; 
+                break; 
             case "=": 
-                instruction = "beq"; 
+                instruction = "bne"; 
                 break; 
             case "<>": 
-                instruction = "bne"; 
+                instruction = "beq"; 
                 break; 
             default: 
                 break; 

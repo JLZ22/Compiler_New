@@ -28,8 +28,10 @@ public class Program {
     public void compile(String fileName){
         Emitter e = new Emitter(fileName); 
         e.emit(".data"); 
-        for(int i = 0 ; i < varDeclarations.size() ; i++){
-            varDeclarations.get(i).compile(e); 
+        if(varDeclarations != null){
+            for(int i = 0 ; i < varDeclarations.size() ; i++){
+                varDeclarations.get(i).compile(e); 
+            }
         }
         e.emit("newLine: .asciiz \"\\n\""); 
         e.emit(".text"); 

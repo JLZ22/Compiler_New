@@ -4,10 +4,12 @@ import java.io.*;
 public class Emitter
 {
 	private PrintWriter out;
+	private int labelId; 
 
 	//creates an emitter for writing to a new file with given name
 	public Emitter(String outputFileName)
 	{
+		labelId = 0; 
 		try
 		{
 			out = new PrintWriter(new FileWriter(outputFileName), true);
@@ -18,6 +20,10 @@ public class Emitter
 		}
 	}
 
+	public int nextLabelId(){
+		labelId += 1; 
+		return labelId; 
+	}
 	//prints one line of code to file (with non-labels indented)
 	public void emit(String code)
 	{
