@@ -1,5 +1,6 @@
 package ast; 
 import environment.*; 
+import codeGen.*;
 /**
  * This class represents a variable. 
  */
@@ -22,5 +23,17 @@ public class Variable extends Expression{
      */
     public int eval(Environment env) throws Exception{
         return env.getVariable(name); 
+    }
+
+    /**
+     * Takes in an emitter and uses it to 
+     * write MIPS code representation of a 
+     * variable into a file. 
+     * 
+     * @param e The emitter used to write code. 
+     */
+    public void compile(Emitter e){
+        e.emit("la $t0 var" + name); 
+        e.emit("l2 $v0 ($t0)"); 
     }
 }
