@@ -20,10 +20,17 @@ public class Emitter
 		}
 	}
 
+	/**
+	 * Each method call will increment the instance 
+	 * variable "labelId" and return it
+	 * 
+	 * @return Return a value one greater than labelId
+	 */
 	public int nextLabelId(){
 		labelId += 1; 
 		return labelId; 
 	}
+
 	//prints one line of code to file (with non-labels indented)
 	public void emit(String code)
 	{

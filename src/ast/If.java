@@ -36,10 +36,9 @@ public class If extends Statement{
      * @param e The emitter used to write code. 
 =    */
     public void compile(Emitter e){
-        String label = "endif" + e.nextLabelId(); 
+        String label = "endIf" + e.nextLabelId(); 
         condition.compile(e, label); 
         stmt.compile(e); 
-        e.emit(label + ": # in place to skip the instructions" + 
-               "following the if statement in the case that the condition is false"); 
+        e.emit(label + ": "); 
     }
 }

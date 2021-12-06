@@ -80,16 +80,16 @@ public class Condition extends Expression{
         String instruction = ""; 
         switch(relop){
             case "<=": 
-                instruction = "bge";   
+                instruction = "bgt";   
                 break; 
             case ">=":
-                instruction = "ble";  
+                instruction = "blt";  
                 break; 
             case "<": 
-                instruction = "bgt"; 
+                instruction = "bge"; 
                 break; 
             case ">": 
-                instruction = "blt"; 
+                instruction = "ble"; 
                 break; 
             case "=": 
                 instruction = "bne"; 

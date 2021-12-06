@@ -43,7 +43,6 @@ public class Program {
         e.emit("li $v0, 10"); 
         e.emit("syscall"); 
         e.close(); 
-
     }
 
     /**

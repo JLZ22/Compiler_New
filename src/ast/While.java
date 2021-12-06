@@ -1,5 +1,6 @@
 package ast; 
 import environment.*; 
+import codeGen.*; 
 /**
  * This class represents a WHILE statement. 
  */
@@ -25,5 +26,23 @@ public class While extends Statement{
         while(condition.eval(env) == 1){
             stmt.exec(env); 
         }
+    }
+
+    /**
+     * Takes in an emitter and uses it to 
+     * write MIPS code representation of an
+     * if statement into a file. 
+     * 
+     * @param e The emitter used to write code. 
+=    */
+    public void compile(Emitter e){
+        int id = e.nextLabelId(); 
+        String endLabel = "endWhile" + id; 
+        String loopLabel = "loop" + id; 
+        e.emit(loopLabel + ":");
+        condition.compile(e, endLabel); 
+        stmt.compile(e); 
+        e.emit("j " + loopLabel); 
+        e.emit(endLabel + ":"); 
     }
 }
