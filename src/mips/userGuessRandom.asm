@@ -7,8 +7,8 @@
 # 11/19/2021
     .data 
         askMsg: .asciiz "Please guess a number between 1 and 1000: "
-        tooHighMsg: .asciiz "Your guess was too high" 
-        tooLowMsg: .asciiz "Your guess was too low" 
+        tooHighMsg: .asciiz "Your guess was too high\n" 
+        tooLowMsg: .asciiz "Your guess was too low\n" 
         correctMsg: .asciiz "Your guess is correct! Congratulations!"
 
     .text 0x00400000
