@@ -1,7 +1,7 @@
 package ast; 
 import environment.*; 
 import java.util.List;
-
+import codeGen.*; 
 /**
  * This class represents a procedure declaration. 
  */
@@ -24,6 +24,19 @@ public class ProcedureDeclaration {
      */
     public void exec(Environment env){
         env.setProcedure(name, this);
+    }
+
+    /**
+     * Takes in an emitter and uses it to 
+     * write MIPS code representation of a 
+     * procedure declaration. 
+     * 
+     * @param e The emitter used to write code. 
+     */
+    public void compile(Emitter e){
+        e.emit("PROC" + name + ":"); 
+        stmt.compile(e);
+        e.emit("jr $ra"); 
     }
 
     /**

@@ -1,5 +1,5 @@
 # Asks the user to input an integer and outputs a fibonacci 
-# sequaence until it raches that number . 
+# sequaence until it reaches that number . 
 #
 # @author John Zeng
 # @date 12/08/2021
@@ -16,7 +16,7 @@ main:
     syscall 
     move $a3, $v0 
 
-    ble $a1 1 baseCase
+    ble $a3 1 baseCase
 
     subu $sp $sp 4 
     sw $ra ($sp)
