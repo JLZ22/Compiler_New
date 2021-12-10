@@ -28,7 +28,7 @@ public class Parser {
      * @throws Exception
      */
     private void eat(String expectedToken) throws Exception{
-        System.out.println(expectedToken); 
+        // System.out.println(expectedToken); 
         if(!expectedToken.equals(currToken))
             throw new IllegalArgumentException("Expected \"" + expectedToken + "\" but found \"" + currToken + "\"");  
         currToken = scanner.nextToken(); 

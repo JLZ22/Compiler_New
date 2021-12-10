@@ -9,3 +9,12 @@
 main:
 	li $v0, 10
 	syscall
+PROCfoo:
+	li $v0 1
+	move $a0 $v0
+	li $v0 1
+	syscall
+	li $v0 4
+	la $a0 newLine
+	syscall
+	jr $ra

@@ -48,6 +48,8 @@ public class Program {
         }
         e.emit("li $v0, 10"); 
         e.emit("syscall"); 
+        for(int i = 0 ; i < procedures.size() ; i++)
+            procedures.get(i).compile(e); 
         e.close(); 
     }
 
