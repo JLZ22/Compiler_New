@@ -62,7 +62,7 @@ public class Emitter
 	 * @param reg The name of the register. 
 	 */
 	public void emitPop(String reg){
-		emit("lw $t0 ($sp)	# pop " + reg);
+		emit("lw " + reg + " ($sp)	# pop " + reg);
 		emit("addu $sp $sp 4"); 
 	}
 }

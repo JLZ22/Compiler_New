@@ -42,7 +42,9 @@ public class ProcedureCall extends Expression{
      * @param e The emitter used to write code. 
      */
     public void compile(Emitter e){
+        e.emitPush("$ra");
         e.emit("jal PROC" + name); 
+        e.emitPop("$ra"); 
     }
 
 }

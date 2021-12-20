@@ -51,7 +51,7 @@ public class ProcedureDeclaration {
      * Returns the parameters of this procedure declaration. 
      * 
      * @return The value inside parameters
-     */
+     */                                 
     public List<String> getParams(){
         return parameters; 
     }
