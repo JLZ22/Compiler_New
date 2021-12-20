@@ -85,6 +85,9 @@ public class Parser {
      * @throws Exception
      */
     public Program parseProgram() throws Exception{
+        List<Statement> varDeclarations = new ArrayList<Statement>();
+        while(currToken.equals("VAR"))
+            varDeclarations.addAll(parseVarDeclarations()); 
         ArrayList<ProcedureDeclaration> procedures = 
             new ArrayList<ProcedureDeclaration>();  
         while(currToken.equals("PROCEDURE")){
@@ -97,9 +100,6 @@ public class Parser {
             eat(";"); 
             procedures.add(new ProcedureDeclaration(name, parms, parseStatement()));
         }
-        List<Statement> varDeclarations = new ArrayList<Statement>();
-        while(currToken.equals("VAR"))
-            varDeclarations.addAll(parseVarDeclarations()); 
         ArrayList<Statement> stmts = new ArrayList<Statement>(); 
         while(scanner.hasNext()){
             stmts.add(parseStatement()); 

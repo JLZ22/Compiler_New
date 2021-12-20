@@ -1,6 +1,7 @@
+VAR ignore;
+
 PROCEDURE foo(); 
 WRITELN(1); 
 
-BEGIN
-END;
+ignore := foo(); 
 .

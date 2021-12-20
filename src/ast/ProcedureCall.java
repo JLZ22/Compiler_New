@@ -1,7 +1,7 @@
 package ast; 
 import environment.*; 
 import java.util.List;
-
+import codeGen.*; 
 /**
  * This class represents a procedure call.
  */
@@ -33,4 +33,16 @@ public class ProcedureCall extends Expression{
         procedure.getStatement().exec(subEnv); 
         return subEnv.getVariable(name); 
     }
+
+    /**
+     * Takes in an emitter and uses it to 
+     * write MIPS code representation of a 
+     * procedure call. 
+     * 
+     * @param e The emitter used to write code. 
+     */
+    public void compile(Emitter e){
+        e.emit("jal PROC" + name); 
+    }
+
 }
