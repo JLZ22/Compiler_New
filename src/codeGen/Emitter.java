@@ -85,4 +85,22 @@ public class Emitter
 	public void clearProcedureContext(){
 		procContext = null; 
 	}
+
+	/**
+	 * If the given variable name is within the 
+	 * current procedure context, return true. Otherwise, 
+	 * return false. 
+	 * 
+	 * @param varName The name of the variable to be compared 
+	 * 				  to the procedure context. 
+	 * @return true If variable name is found within the procedure context; otherwise
+	 * 		   false
+	 */
+	public boolean isLocalVariable(String varName){
+		for(int i = 0 ; i < procContext.size() ; i++){
+				if(procContext.get(i).equals(varName))
+					return true; 
+		}
+		return false; 
+	}
 }
