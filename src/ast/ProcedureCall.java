@@ -43,7 +43,15 @@ public class ProcedureCall extends Expression{
      */
     public void compile(Emitter e){
         e.emitPush("$ra");
-        e.emit("jal PROC" + name); 
+        for(int i = 0 ; i < arguments.size() ; i++){
+            arguments.get(i).compile(e); 
+            e.emitPush("$v0"); 
+        }
+        e.emit("jal PROC" + name);
+        for(int i = 0 ; i < arguments.size() ; i++){
+            arguments.get(i).compile(e); 
+            e.emitPop("$t0"); 
+        } 
         e.emitPop("$ra"); 
     }
 
