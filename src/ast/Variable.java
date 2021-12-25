@@ -33,7 +33,13 @@ public class Variable extends Expression{
      * @param e The emitter used to write code. 
      */
     public void compile(Emitter e){
-        e.emit("la $t0 var" + name); 
-        e.emit("lw $v0 ($t0)"); 
+        if(e.isLocalVariable(name)){
+            e.emit("addu $t0 $sp " + e.getOffset(name)); 
+            e.emit("lw $v0 ($t0)");
+        }
+        else{
+            e.emit("la $t0 var" + name); 
+            e.emit("lw $v0 ($t0)"); 
+        }
     }
 }

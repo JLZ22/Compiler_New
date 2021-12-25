@@ -1,6 +1,5 @@
 package codeGen; 
 import java.io.*;
-import java.util.Collections;
 import java.util.List;
 
 import ast.*;
@@ -57,7 +56,7 @@ public class Emitter
 	 */
 	public void emitPush(String reg){
 		emit("subu $sp $sp 4"); 
-		emit("sw " + reg + " ($sp)	# push val of stack into " + reg);
+		emit("sw " + reg + " ($sp)	# push val of " + reg + " into the stack");
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class Emitter
 	 * @param reg The name of the register. 
 	 */
 	public void emitPop(String reg){
-		emit("lw " + reg + " ($sp)	# pop " + reg);
+		emit("lw " + reg + " ($sp)	# pop value of stack into " + reg);
 		emit("addu $sp $sp 4"); 
 	}
 
@@ -78,7 +77,6 @@ public class Emitter
 	 */
 	public void setProcedureContext(ProcedureDeclaration proc){
 		procContext = proc.getParams(); 
-		Collections.reverse(procContext); 
 	}
 
 	/**
@@ -99,6 +97,8 @@ public class Emitter
 	 * 		   false
 	 */
 	public boolean isLocalVariable(String varName){
+		if(procContext==null)
+			return false; 
 		for(int i = 0 ; i < procContext.size() ; i++){
 				if(procContext.get(i).equals(varName))
 					return true; 
@@ -118,12 +118,6 @@ public class Emitter
 	 * @return The offset of the localVarName
 	 */
 	public int getOffset(String localVarName){
-		int index = -1; 
-		for(int i = 0 ; i < procContext.size() ; i++){
-			String var = procContext.get(i); 
-			if(var.equals(localVarName))
-				index = i; 
-		}
-		return index*4; 
+		return (procContext.size() - procContext.indexOf(localVarName) - 1)*4; 
 	}
 }
