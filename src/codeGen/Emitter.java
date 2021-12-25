@@ -9,6 +9,7 @@ public class Emitter
 	private PrintWriter out;
 	private int labelId; 
 	private List<String> procContext; 
+	private int excessStackHeight = 0; 
 
 	//creates an emitter for writing to a new file with given name
 	public Emitter(String outputFileName)
@@ -57,6 +58,7 @@ public class Emitter
 	public void emitPush(String reg){
 		emit("subu $sp $sp 4"); 
 		emit("sw " + reg + " ($sp)	# push val of " + reg + " into the stack");
+		excessStackHeight += 4; 
 	}
 
 	/**
@@ -68,6 +70,7 @@ public class Emitter
 	public void emitPop(String reg){
 		emit("lw " + reg + " ($sp)	# pop value of stack into " + reg);
 		emit("addu $sp $sp 4"); 
+		excessStackHeight -= 4; 
 	}
 
 	/**
@@ -77,6 +80,7 @@ public class Emitter
 	 */
 	public void setProcedureContext(ProcedureDeclaration proc){
 		procContext = proc.getParams(); 
+		excessStackHeight = 0; 
 	}
 
 	/**
@@ -118,6 +122,6 @@ public class Emitter
 	 * @return The offset of the localVarName
 	 */
 	public int getOffset(String localVarName){
-		return (procContext.size() - procContext.indexOf(localVarName) - 1)*4; 
+		return excessStackHeight + (procContext.size() - procContext.indexOf(localVarName) - 1)*4; 
 	}
 }
