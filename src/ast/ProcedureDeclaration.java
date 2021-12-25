@@ -37,7 +37,10 @@ public class ProcedureDeclaration {
         e.setProcedureContext(this); 
         e.emit("PROC" + name + ":"); 
         stmt.compile(e);
-        e.emit("jr $ra"); 
+        e.emit("jr $ra");
+        System.out.println(e.getOffset("x")); 
+        System.out.println(e.getOffset("y")); 
+        System.out.println(e.getOffset("z")); 
         e.clearProcedureContext();
     }
 

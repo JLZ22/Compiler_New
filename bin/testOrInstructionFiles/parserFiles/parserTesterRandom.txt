@@ -1,6 +1,8 @@
-PROCEDURE foo(); 
-WRITELN(1); 
+VAR ignore; 
 
+PROCEDURE foo(x, y, z); 
 BEGIN
-END;
+END; 
+
+ignore := foo(8, 9, 10); 
 .

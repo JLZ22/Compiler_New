@@ -1,5 +1,7 @@
 package codeGen; 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ast.*;
@@ -77,6 +79,7 @@ public class Emitter
 	 */
 	public void setProcedureContext(ProcedureDeclaration proc){
 		procContext = proc.getParams(); 
+		Collections.reverse(procContext); 
 	}
 
 	/**
@@ -102,5 +105,26 @@ public class Emitter
 					return true; 
 		}
 		return false; 
+	}
+
+	/**
+	 * Gets the offset of the varname on the stack. 
+	 * 
+	 * @precondition: localVarName is the name of a local
+	 * 				  variable for the procedure currnetly 
+	 * 				  being compiled
+	 * 
+	 * @param localVarName The name of the variable whose 
+	 * 					   offsetis being calculated
+	 * @return The offset of the localVarName
+	 */
+	public int getOffset(String localVarName){
+		int index = -1; 
+		for(int i = 0 ; i < procContext.size() ; i++){
+			String var = procContext.get(i); 
+			if(var.equals(localVarName))
+				index = i; 
+		}
+		return index*4; 
 	}
 }
