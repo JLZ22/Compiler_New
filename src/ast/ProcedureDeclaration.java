@@ -34,9 +34,11 @@ public class ProcedureDeclaration {
      * @param e The emitter used to write code. 
      */
     public void compile(Emitter e){
+        e.setProcedureContext(this); 
         e.emit("PROC" + name + ":"); 
         stmt.compile(e);
         e.emit("jr $ra"); 
+        e.clearProcedureContext();
     }
 
     /**
