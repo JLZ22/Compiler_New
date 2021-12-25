@@ -10,11 +10,11 @@
 main:
 	subu $sp $sp 4
 	sw $ra ($sp)	# push val of $ra into the stack
-	li $v0 9
+	li $v0 10
 	subu $sp $sp 4
 	sw $v0 ($sp)	# push val of $v0 into the stack
 	jal PROCfoo
-	li $v0 9
+	li $v0 10
 	lw $t0 ($sp)	# pop value of stack into $t0
 	addu $sp $sp 4
 	lw $ra ($sp)	# pop value of stack into $ra
@@ -24,14 +24,18 @@ main:
 	li $v0, 10
 	syscall
 PROCfoo:
-	li $v0 1
+	addu $t0 $sp 0
+	lw $v0 ($t0)
 	subu $sp $sp 4
 	sw $v0 ($sp)	# push val of $v0 into the stack
-	addu $t0 $sp 4
-	lw $v0 ($t0)
+	li $v0 1
 	lw $t0 ($sp)	# pop value of stack into $t0
 	addu $sp $sp 4
 	add $v0, $t0, $v0
+	addu $t0 $sp 0
+	sw $v0 ($t0)
+	addu $t0 $sp 0
+	lw $v0 ($t0)
 	move $a0 $v0
 	li $v0 1
 	syscall
