@@ -51,21 +51,21 @@ public class BinOp extends Expression{
         exp1.compile(e); 
         e.emitPush("$v0");
         exp2.compile(e); 
-        e.emitPop("$t0"); 
+        e.emitPop("$t2"); 
         switch(op){
             case "*": 
-                e.emit("mult $t0, $v0"); 
+                e.emit("mult $t2, $v0"); 
                 e.emit("mflo $v0");
                 break; 
             case "/":
-                e.emit("div $t0, $v0"); 
+                e.emit("div $t2, $v0"); 
                 e.emit("mflo $v0"); 
                 break; 
             case "+": 
-                e.emit("add $v0, $t0, $v0"); 
+                e.emit("add $v0, $t2, $v0"); 
                 break; 
             case "-": 
-                e.emit("sub $v0, $t0, $v0"); 
+                e.emit("sub $v0, $t2, $v0"); 
                 break; 
             default: 
                 System.out.println("Invalid binary operator"); 

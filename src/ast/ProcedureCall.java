@@ -49,7 +49,6 @@ public class ProcedureCall extends Expression{
         }
         e.emit("jal PROC" + name);
         for(int i = 0 ; i < arguments.size() ; i++){
-            arguments.get(i).compile(e); 
             e.emitPop("$t0"); 
         } 
         e.emitPop("$ra"); 

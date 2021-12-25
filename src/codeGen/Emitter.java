@@ -10,6 +10,7 @@ public class Emitter
 	private int labelId; 
 	private List<String> procContext; 
 	private int excessStackHeight = 0; 
+	private ProcedureDeclaration proc; 
 
 	//creates an emitter for writing to a new file with given name
 	public Emitter(String outputFileName)
@@ -79,6 +80,7 @@ public class Emitter
 	 * @param proc The procedure for which we are setting the context. 
 	 */
 	public void setProcedureContext(ProcedureDeclaration proc){
+		this.proc = proc; 
 		procContext = proc.getParams(); 
 		excessStackHeight = 0; 
 	}
@@ -87,6 +89,7 @@ public class Emitter
 	 * Clears the cucrrent procedure context by remembering null. 
 	 */
 	public void clearProcedureContext(){
+		this.proc = null; 
 		procContext = null; 
 	}
 
@@ -103,6 +106,8 @@ public class Emitter
 	public boolean isLocalVariable(String varName){
 		if(procContext==null)
 			return false; 
+		if(proc.getName().equals(varName))
+			return true; 
 		for(int i = 0 ; i < procContext.size() ; i++){
 				if(procContext.get(i).equals(varName))
 					return true; 
@@ -122,6 +127,8 @@ public class Emitter
 	 * @return The offset of the localVarName
 	 */
 	public int getOffset(String localVarName){
-		return excessStackHeight + (procContext.size() - procContext.indexOf(localVarName) - 1)*4; 
+		if(proc.getName().equals(localVarName))
+			return 0; 
+		return excessStackHeight + (procContext.size() - procContext.indexOf(localVarName))*4; 
 	}
 }

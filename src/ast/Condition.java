@@ -75,7 +75,7 @@ public class Condition extends Expression{
      */
     public void compile(Emitter e, String endLabel){
         expr1.compile(e);
-        e.emit("move $t0, $v0"); 
+        e.emit("move $t1, $v0"); 
         expr2.compile(e); 
         String instruction = ""; 
         switch(relop){
@@ -100,6 +100,6 @@ public class Condition extends Expression{
             default: 
                 break; 
         }
-        e.emit(instruction + " $t0, $v0, " + endLabel); 
+        e.emit(instruction + " $t1, $v0, " + endLabel); 
     }
 }
