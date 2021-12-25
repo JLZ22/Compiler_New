@@ -1,10 +1,14 @@
 package codeGen; 
 import java.io.*;
+import java.util.List;
+
+import ast.*;
 
 public class Emitter
 {
 	private PrintWriter out;
 	private int labelId; 
+	private List<String> procContext; 
 
 	//creates an emitter for writing to a new file with given name
 	public Emitter(String outputFileName)
@@ -64,5 +68,21 @@ public class Emitter
 	public void emitPop(String reg){
 		emit("lw " + reg + " ($sp)	# pop " + reg);
 		emit("addu $sp $sp 4"); 
+	}
+
+	/**
+	 * Remember proc as current procedure context. 
+	 * 
+	 * @param proc The procedure for which we are setting the context. 
+	 */
+	public void setProcedureContext(ProcedureDeclaration proc){
+		procContext = proc.getParams(); 
+	}
+
+	/**
+	 * Clears the cucrrent procedure context by remembering null. 
+	 */
+	public void clearProcedureContext(){
+		procContext = null; 
 	}
 }
