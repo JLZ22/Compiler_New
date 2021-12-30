@@ -61,30 +61,30 @@ PROCprintSquares:
 	li $v0 0
 	subu $sp $sp 4
 	sw $v0 ($sp)	# push val of $v0 into the stack
-	addu $t0 $sp 24
-	lw $v0 ($t0)
 	addu $t0 $sp 16
+	lw $v0 ($t0)
+	addu $t0 $sp 4
 	sw $v0 ($t0)
 loop1:
-	addu $t0 $sp 16
+	addu $t0 $sp 4
 	lw $v0 ($t0)
 	move $t1, $v0
-	addu $t0 $sp 20
+	addu $t0 $sp 12
 	lw $v0 ($t0)
 	bgt $t1, $v0, endWhile1
-	addu $t0 $sp 16
+	addu $t0 $sp 4
 	lw $v0 ($t0)
 	subu $sp $sp 4
 	sw $v0 ($sp)	# push val of $v0 into the stack
-	addu $t0 $sp 20
+	addu $t0 $sp 8
 	lw $v0 ($t0)
 	lw $t2 ($sp)	# pop value of stack into $t2
 	addu $sp $sp 4
 	mult $t2, $v0
 	mflo $v0
-	addu $t0 $sp 12
+	addu $t0 $sp 0
 	sw $v0 ($t0)
-	addu $t0 $sp 12
+	addu $t0 $sp 0
 	lw $v0 ($t0)
 	move $a0 $v0
 	li $v0 1
@@ -92,7 +92,7 @@ loop1:
 	li $v0 4
 	la $a0 newLine
 	syscall
-	addu $t0 $sp 16
+	addu $t0 $sp 4
 	lw $v0 ($t0)
 	subu $sp $sp 4
 	sw $v0 ($sp)	# push val of $v0 into the stack
@@ -100,7 +100,7 @@ loop1:
 	lw $t2 ($sp)	# pop value of stack into $t2
 	addu $sp $sp 4
 	add $v0, $t2, $v0
-	addu $t0 $sp 16
+	addu $t0 $sp 4
 	sw $v0 ($t0)
 	la $t0 vartimes
 	lw $v0 ($t0)

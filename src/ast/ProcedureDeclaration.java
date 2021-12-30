@@ -36,17 +36,22 @@ public class ProcedureDeclaration {
      * @param e The emitter used to write code. 
      */
     public void compile(Emitter e){
+        System.out.println(name);
         e.emit("PROC" + name + ":"); 
         e.emit("li $t0 0"); 
         e.emitPush("$t0");
-        e.setProcedureContext(this); 
-        for(int i = 0 ; i < localVars.size() ; i++){
-            e.emit("li $v0 0"); 
-            e.emitPush("$v0"); 
+        if(localVars != null){
+            for(int i = 0 ; i < localVars.size() ; i++){
+                e.emit("li $v0 0"); 
+                e.emitPush("$v0"); 
+            }
         }
+        e.setProcedureContext(this); 
         stmt.compile(e);
-        for(int i = 0 ; i < localVars.size() ; i++){
-                e.emitPop("$t0"); 
+        if(localVars != null){
+            for(int i = 0 ; i < localVars.size() ; i++){
+                    e.emitPop("$t0"); 
+            }
         }
         e.emitPop("$v0"); 
         e.clearProcedureContext();

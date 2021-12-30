@@ -60,6 +60,7 @@ public class Emitter
 		emit("subu $sp $sp 4"); 
 		emit("sw " + reg + " ($sp)	# push val of " + reg + " into the stack");
 		excessStackHeight += 4; 
+		System.out.println(excessStackHeight);
 	}
 
 	/**
@@ -72,6 +73,8 @@ public class Emitter
 		emit("lw " + reg + " ($sp)	# pop value of stack into " + reg);
 		emit("addu $sp $sp 4"); 
 		excessStackHeight -= 4; 
+		System.out.println(excessStackHeight);
+
 	}
 
 	/**
@@ -82,6 +85,7 @@ public class Emitter
 	public void setProcedureContext(ProcedureDeclaration proc){
 		this.proc = proc; 
 		procContext = proc.getParams();
+		procContext.add(proc.getName()); 
 		List<String> localVars = proc.getLocalVariables(); 
 		if(localVars != null)
 			procContext.addAll(localVars); 
@@ -110,6 +114,11 @@ public class Emitter
 			return false; 
 		if(proc.getName().equals(varName))
 			return true; 
+		// List<String> localVariables = proc.getLocalVariables();
+		// if(localVariables != null)
+		// 	for(int i = 0 ; i < localVariables.size() ; i++)
+		// 		if(localVariables.get(i).equals(varName))
+		// 			return true; 
 		for(int i = 0 ; i < procContext.size() ; i++){
 				if(procContext.get(i).equals(varName))
 					return true; 
@@ -131,6 +140,15 @@ public class Emitter
 	public int getOffset(String localVarName){
 		if(proc.getName().equals(localVarName))
 			return 0; 
-		return excessStackHeight + (procContext.size() - procContext.indexOf(localVarName))*4; 
+		int index = procContext.indexOf(localVarName);
+		int paramOffset = 0; 
+		if(index >= 0)
+			paramOffset = (procContext.size() - (index + 1))*4;
+		int temp = excessStackHeight + paramOffset; 
+		System.out.println(".." + procContext.indexOf(localVarName));
+		System.out.println("?" + (procContext.size() - (procContext.indexOf(localVarName) + 1))*4);
+		System.out.println("stackH: " + excessStackHeight); 
+		System.out.println("offset"+temp); 
+		return temp; 
 	}
 }
