@@ -9,11 +9,13 @@ public class ProcedureDeclaration {
     private String name; 
     private List<String> parameters; 
     private Statement stmt; 
+    private List<String> localVars; 
 
-    public ProcedureDeclaration(String name, List<String> params, Statement stmt){
+    public ProcedureDeclaration(List<String> localVars, String name, List<String> params, Statement stmt){
         this.name = name; 
         parameters = params; 
         this.stmt = stmt; 
+        this.localVars = localVars; 
     }
 
     /**
@@ -35,12 +37,17 @@ public class ProcedureDeclaration {
      */
     public void compile(Emitter e){
         e.emit("PROC" + name + ":"); 
-        e.emit("li $t0 0");
+        e.emit("li $t0 0"); 
         e.emitPush("$t0");
         e.setProcedureContext(this); 
+        for(int i = 0 ; i < localVars.size() ; i++){
+            e.emit("li $v0 0"); 
+            e.emitPush("$v0"); 
+        }
         stmt.compile(e);
-        System.out.println(e.getOffset("x")); 
-        System.out.println(e.getOffset("y")); 
+        for(int i = 0 ; i < localVars.size() ; i++){
+                e.emitPop("$t0"); 
+        }
         e.emitPop("$v0"); 
         e.clearProcedureContext();
         e.emit("jr $ra");
@@ -54,10 +61,20 @@ public class ProcedureDeclaration {
     public String getName(){
         return name; 
     }
+
+     /**
+     * Returns the local variables of this procedure declaration. 
+     * 
+     * @return The names of the local variables
+     */                                 
+    public List<String> getLocalVariables(){
+        return localVars; 
+    }
+
     /**
      * Returns the parameters of this procedure declaration. 
      * 
-     * @return The value inside parameters
+     * @return The name of the parameters
      */                                 
     public List<String> getParams(){
         return parameters; 

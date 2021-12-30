@@ -56,24 +56,48 @@ public class Parser {
 
     /**
      * Parses through the variable declaration and 
-     * returns a list of variabble assignments. 
+     * returns a list of variabble names. 
      * 
-     * @return A list of variable assignments. 
+     * @return A list of variable names. 
      * @throws Exception
      */
-    public List<Statement> parseVarDeclarations() throws Exception {
+    public List<String> parseVarDeclarations() throws Exception {
         if(!currToken.equals("VAR"))
             return null;  
-         List<Statement> varDeclarations = new ArrayList<Statement>(); 
+         List<String> vars = new ArrayList<String>(); 
          eat("VAR"); 
          while(!currToken.equals(";")){
-            varDeclarations.add(new VarDeclaration(currToken));  
+            vars.add(currToken);  
             eat(currToken); 
             if(currToken.equals(","))
                 eat(currToken); 
          }
          eat(";"); 
-         return varDeclarations; 
+         return vars; 
+    }
+
+    /**
+     * Parses through the procedure declarations and 
+     * returns a list of procedure declarations.
+     * 
+     * @return a list of procedure declarations
+     * @throws Exception
+     */
+    public ArrayList<ProcedureDeclaration> parseProcedureDeclaration() throws Exception{
+        ArrayList<ProcedureDeclaration> procedures = 
+            new ArrayList<ProcedureDeclaration>();  
+        while(currToken.equals("PROCEDURE")){
+            eat(currToken); 
+            String name = currToken; 
+            eat(currToken); 
+            eat("("); 
+            List<String> parms = parseParms(); 
+            eat(")"); 
+            eat(";"); 
+            List<String> localVars = parseVarDeclarations(); 
+            procedures.add(new ProcedureDeclaration(localVars, name, parms, parseStatement()));
+        }
+        return procedures; 
     }
 
     /**
@@ -85,22 +109,16 @@ public class Parser {
      * @throws Exception
      */
     public Program parseProgram() throws Exception{
+        List<String> varNames = parseVarDeclarations(); 
         List<Statement> varDeclarations = new ArrayList<Statement>();
-        while(currToken.equals("VAR"))
-            varDeclarations.addAll(parseVarDeclarations()); 
-        ArrayList<ProcedureDeclaration> procedures = 
-            new ArrayList<ProcedureDeclaration>();  
-        while(currToken.equals("PROCEDURE")){
-            eat(currToken); 
-            String name = currToken; 
-            eat(currToken); 
-            eat("("); 
-            List<String> parms = parseParms(); 
-            eat(")"); 
-            eat(";"); 
-            procedures.add(new ProcedureDeclaration(name, parms, parseStatement()));
-        }
+        ArrayList<ProcedureDeclaration> procedures = parseProcedureDeclaration();
         ArrayList<Statement> stmts = new ArrayList<Statement>(); 
+
+        if(varNames != null){
+            for(String name : varNames){
+                varDeclarations.add(new VarDeclaration(name)); 
+            }
+        }
         while(scanner.hasNext()){
             stmts.add(parseStatement()); 
         }

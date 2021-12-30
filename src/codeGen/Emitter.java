@@ -81,7 +81,10 @@ public class Emitter
 	 */
 	public void setProcedureContext(ProcedureDeclaration proc){
 		this.proc = proc; 
-		procContext = proc.getParams(); 
+		procContext = proc.getParams();
+		List<String> localVars = proc.getLocalVariables(); 
+		if(localVars != null)
+			procContext.addAll(localVars); 
 		excessStackHeight = 0; 
 	}
 
@@ -90,7 +93,6 @@ public class Emitter
 	 */
 	public void clearProcedureContext(){
 		this.proc = null; 
-		procContext = null; 
 	}
 
 	/**
