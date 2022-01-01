@@ -1,21 +1,13 @@
-VAR count, ignore, times; 
-PROCEDURE printSquares(low, high); 
-VAR count, square; 
+VAR ignore; 
+PROCEDURE fib(n);
+BEGIN
+    IF n <= 1 THEN 
+        fib := n;
+    IF n > 1 THEN 
+        fib := fib(n-1) + fib(n-2); 
+END;
+
 BEGIN 
-count := low; 
-WHILE count <= high DO 
-BEGIN 
-square := count * count; 
-WRITELN(square); 
-count := count + 1; 
-times := times + 1; 
-END; 
-END; 
-BEGIN 
-count := 196; 
-times := 0; 
-ignore := printSquares(10, 13); 
-WRITELN(count); 
-WRITELN(times); 
+    WRITELN(fib(5));
 END;
 .

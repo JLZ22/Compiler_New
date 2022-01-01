@@ -36,7 +36,6 @@ public class ProcedureDeclaration {
      * @param e The emitter used to write code. 
      */
     public void compile(Emitter e){
-        System.out.println(name);
         e.emit("PROC" + name + ":"); 
         e.emit("li $t0 0"); 
         e.emitPush("$t0");
